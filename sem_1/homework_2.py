@@ -17,4 +17,4 @@ def check_text(cmd, words):
 if __name__ == '__main__':
     print(check_text('ls /home/home', 'snap'))
     print(check_text('rm --help', 'fooo'))
-    print(check_text('cat /etc/os-release', 'VERSION_CODENAME=jammy'))
+
