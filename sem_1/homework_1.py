@@ -1,31 +1,15 @@
-#import subprocess
-
-#if __name__ == '__main__':
-#    def check_output(command, text):
- #       output = subprocess.check_output(command, shell=True, stdout=subprocess.PIPE, encoding='utf-8')
-  #  if text in output:
-   #     return True
-    #else:
-     #   return False
-
-#command = "ls -l"
-#text = "file.txt"
-#result = check_output(command, text)
-#print(result)
-
-
 import subprocess
-def check_text(cmd, text):
-    result = subprocess.run(cmd, shell=True, stdout=subprocess.PIPE, encoding='utf-8')
-    if result.returncode == 0:
-        out = result.stdout
-        if text in out:
+def check_output(command, text):
+    try:
+        output = subprocess.check_output(command, shell=True, universal_newlines=True)
+        if text in output:
             return True
         else:
             return False
-    return f'wrong command: {cmd}'
+    except subprocess.CalledProcessError:
+        return False
 
-if __name__ == '__main__':
-    print(check_text('ls /home/gb', 'Страница справки по GNU'))
-    print(check_text('rm --help', 'Страница справки по GNU'))
-    print(check_text('cat /etc/os-release', 'Страница'))
+command = "cat /etc/os-release"
+text = "POLICY"
+result = check_output(command, text)
+print(result)

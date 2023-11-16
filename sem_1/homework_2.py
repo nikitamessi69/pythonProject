@@ -1,20 +1,25 @@
 import subprocess
 import string
 
-
-def check_text(cmd, words):
-    result = subprocess.run(cmd, shell=True, stdout=subprocess.PIPE, encoding='utf-8')
-    temp = result.stdout
-    if result.returncode == 0:
-        out = ''.join([' ' if p in string.punctuation else p for p in temp])
-        if words in out:
-            return True
+def check_output(command, text, word_mode=False):
+    try:
+        output = subprocess.check_output(command, shell=True, universal_newlines=True)
+        if not word_mode:
+            if text in output:
+                return True
+            else:
+                return False
         else:
-            return False
-    return f'wrong command: {cmd}'
+            output_words = output.split()
+            cleaned_words = [word.strip(string.punctuation) for word in output_words]
+            if text in cleaned_words:
+                return True
+            else:
+                return False
+    except subprocess.CalledProcessError:
+        return False
 
-
-if __name__ == '__main__':
-    print(check_text('ls /home/home', 'snap'))
-    print(check_text('rm --help', 'fooo'))
-
+command = "rm --help"
+text = "verbose"
+result = check_output(command, text, word_mode=True)
+print(result)
