@@ -6,14 +6,14 @@ with open('config.yaml') as f:
 
 
 class TestNegative:
-    def test_step1(self):
+    def test_step1(self, make_files, make_folders, clear_folders, make_bad_arx):
         # test1
         result1 = checkout_negative(
             "cd {}; 7z e bad_arx.7z -o{} -y -t{}".format(data["folder_out"], data["folder_ext"], data["archive_type"]),
             "ERRORS")
         assert result1, "test1 FAIL"
 
-    def test_step2(self):
+    def test_step2(self, make_folders, clear_folders, make_files, make_bad_arx):
         # test2
         assert checkout_negative("cd {}; 7z t bad_arx.7z -t{}".format(data["folder_out"], data["archive_type"]),
                                  "ERRORS"), "test2 FAIL"

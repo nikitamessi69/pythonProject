@@ -14,7 +14,7 @@ def calculate_crc32(hash):
 
 
 class TestPositive:
-    def test_step1(self):
+    def test_step1(self, make_folders, clear_folders, make_files):
         # test1
         result1 = checkout(
             "cd {}; 7z a {}/arx2 -t{}".format(data["folder_in"], data["folder_out"], data["archive_type"]),
@@ -22,7 +22,7 @@ class TestPositive:
         result2 = checkout("cd {}; ls".format(data["folder_out"]), "arx2.7z")
         assert result1 and result2, "test1 FAIL"
 
-    def test_step2(self, make_files):
+    def test_step2(self, clear_folders, make_files):
         # test2
         result1 = checkout(
             "cd {}; 7z e arx2.7z -o{} -y -t{}".format(data["folder_out"], data["folder_ext"], data["archive_type"]),
@@ -30,12 +30,12 @@ class TestPositive:
         result2 = checkout("cd {}; ls".format(data["folder_ext"]), make_files[0])
         assert result1 and result2, "test2 FAIL"
 
-    def test_step3(self):
+    def test_step3(self, clear_folders, make_files):
         # test3
         assert checkout("cd {}; 7z t arx2.7z -t{}".format(data["folder_out"], data["archive_type"]),
                         "Everything is Ok"), "test3 FAIL"
 
-    def test_step4(self):
+    def test_step4(self, clear_folders, make_files):
         # test4
         assert checkout(
             "cd {}; 7z u {}/arx2.7z -t{}".format(data["folder_in"], data["folder_out"], data["archive_type"]),
