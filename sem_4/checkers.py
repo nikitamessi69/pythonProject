@@ -20,8 +20,3 @@ def checkout_negative(cmd, text):
 
 def getout(cmd):
     return subprocess.run(cmd, shell=True, stdout=subprocess.PIPE, encoding='utf-8').stdout
-
-
-def journalctl(start_time):
-    cmd = f"journalctl --since '{start_time}'"
-    return getout(cmd)

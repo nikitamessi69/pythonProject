@@ -83,3 +83,11 @@ def deploy():
 @pytest.fixture()
 def start_time():
     return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+
+def journalctl(start_time):
+    cmd = f"journalctl --since '{start_time}'"
+    output = getout(cmd)
+    with open("stat.txt", "a") as f:
+        f.write(output)
+    return output
